@@ -44,8 +44,7 @@ INSTALLED_APPS = [
     "ckeditor",
     "pages.apps.PagesConfig",
     "cars.apps.CarsConfig",
-    
-    
+    "account.apps.AccountConfig",
 ]
 
 MIDDLEWARE = [
