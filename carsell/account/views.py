@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
 
 
 def login(request):
@@ -8,7 +9,11 @@ def logout(request):
     return render(request, 'account/logout.html')
 
 def register(request):
-    return render(request, 'account/register.html')
+    if request.method == 'POST':
+        messages.error(request, 'Could not register')
+        return redirect('register')
+    else:
+        return render(request, 'account/register.html')
 
 def dashboard(request):
     return render(request, 'account/dashboard.html')
