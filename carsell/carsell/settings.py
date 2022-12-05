@@ -40,12 +40,23 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "django.contrib.sites",
     "active_link",
     "multiselectfield",
     "ckeditor",
     "pages.apps.PagesConfig",
     "cars.apps.CarsConfig",
-    "account.apps.AccountConfig",
+    "accounts.apps.AccountsConfig",
+
+    #allaccounts
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    
+    
+    #Providers
+    "allauth.socialaccount.providers.facebook",
+    "allauth.socialaccount.providers.google",
 ]
 
 MIDDLEWARE = [
@@ -137,3 +148,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
+
+SITE_ID = 1

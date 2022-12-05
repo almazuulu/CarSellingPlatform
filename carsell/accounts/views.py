@@ -17,7 +17,7 @@ def login(request):
         else:
             messages.error(request, 'Invalid login credentials')
             return redirect('login')
-    return render(request, 'account/login.html')
+    return render(request, 'accounts/login.html')
 
 def logout(request):
     auth.logout(request)
@@ -53,7 +53,7 @@ def register(request):
         # messages.error(request, 'Could not register')
        
     else:
-        return render(request, 'account/register.html')
+        return render(request, 'accounts/register.html')
 
 def dashboard(request):
-    return render(request, 'account/dashboard.html')
+    return render(request, 'accounts/dashboard.html')
