@@ -4,6 +4,19 @@ from django.contrib.auth.models import User
 
 
 def login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+    
+        user = auth.authenticate(username=username, password=password)
+        
+        if user is not None:
+            auth.login(request, user)
+            messages.success(request, 'You are now logged in')
+            return redirect('dashboard')
+        else:
+            messages.error(request, 'Invalid login credentials')
+            return redirect('login')
     return render(request, 'account/login.html')
 
 def logout(request):
@@ -19,17 +32,20 @@ def register(request):
         confirm_password = request.POST['confirm_password']
         
         if password == confirm_password:
-            if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
+            if User.objects.filter(username=username).exists():
                 messages.error(request, 'This user already exists')
                 return redirect('register')
             else:
-                user = User.objects.create(first_name=firstname, last_name=lastname,email=email, username=username, password=password)     
-                auth.login(request, user)
-                messages.success(request, 'You are now logged in')
-                return redirect('dashboard')
-                user.save()
-                messages.success(request, 'User has been successfully registered!')
-                return redirect('login') 
+                if User.objects.filter(email=email).exists():
+                    messages.error(request, 'This email already exists')
+                    return redirect('register')
+                else:        
+                    user = User.objects.create_user(first_name=firstname, last_name=lastname,email=email, username=username, password=password)     
+                    user.save()
+                    messages.success(request, 'User has been successfully registered!')
+                    auth.login(request, user)
+                    messages.success(request, 'You are now logged in')
+                    return redirect('dashboard')
         else:
             messages.error(request, 'Password do not match')
             return redirect('register')
