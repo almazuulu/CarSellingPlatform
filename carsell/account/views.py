@@ -20,7 +20,8 @@ def login(request):
     return render(request, 'account/login.html')
 
 def logout(request):
-    return render(request, 'account/logout.html')
+    auth.logout(request)
+    return redirect('home')
 
 def register(request):
     if request.method == 'POST':
