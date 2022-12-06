@@ -152,3 +152,11 @@ MESSAGE_TAGS = {
 
 LOGIN_REDIRECT_URL = 'dashboard'
 SITE_ID = 1
+
+#Email Settings
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'askardjango@gmail.com'
+EMAIL_HOST_PASSWORD = 'bygnmetuqkidhyhw'
+EMAIL_USE_TSL = False
+EMAIL_USE_SSL = True
