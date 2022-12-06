@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "pages.apps.PagesConfig",
     "cars.apps.CarsConfig",
     "accounts.apps.AccountsConfig",
+    "contacts.apps.ContactsConfig",
 
     #allaccounts
     "allauth",
@@ -149,4 +150,5 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
 
+LOGIN_REDIRECT_URL = 'dashboard'
 SITE_ID = 1
