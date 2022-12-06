@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
+from contacts.models import Contact
+from cars.models import Car
 
 
 def login(request):
@@ -55,5 +58,20 @@ def register(request):
     else:
         return render(request, 'accounts/register.html')
 
+@login_required(login_url='login')
 def dashboard(request):
-    return render(request, 'accounts/dashboard.html')
+    user_id = request.user.id
+    allInquires = Contact.objects.order_by('created_date').filter(user_id=user_id)
+    carList = [i.car_id for i in allInquires]
+    carListView = []
+    
+    for cl in carList:
+        car = Car.objects.get(id=cl)
+        carListView.append(car)
+        
+    context = {
+        'allInquires': allInquires,
+        'cars': carListView,
+    }
+
+    return render(request, 'accounts/dashboard.html', context)

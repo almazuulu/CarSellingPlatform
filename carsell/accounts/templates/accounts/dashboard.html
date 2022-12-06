@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block title %} Dashboard {% endblock %}
 {% load static %}
+{% load humanize %}
 {% block content %}
 <!-- Sub banner start -->
 <div class="sub-banner overview-bgi">
@@ -22,8 +23,10 @@
 	{% include 'includes/messages.html' %}
 	<div class="main-title" style="text-align:left !important;">
             <h1>Welcome <span>{{ user.first_name }},</span></h1>
+	{% if allInquires %}
             <p>Here are the cars that you have inquired about</p>
-        </div>
+    </div>
+	
 	<table class="table table-hover">
 	  <thead>
 		<tr>
@@ -35,29 +38,21 @@
 		</tr>
 	  </thead>
 	  <tbody>
-		<tr>
-		  <th scope="row">1</th>
-		  <td>Lamborgini Huracan</td>
-		  <td>Austin</td>
-		  <td>$25000</td>
-		  <td><a href="#" class="btn btn-outline-dark">View Car</a></td>
-		</tr>
-		<tr>
-		  <th scope="row">2</th>
-		  <td>Lamborgini Huracan</td>
-		  <td>Austin</td>
-		  <td>$25000</td>
-		  <td><a href="#" class="btn btn-outline-dark">View Car</a></td>
-		</tr>
-		<tr>
-		  <th scope="row">3</th>
-		  <td>Lamborgini Huracan</td>
-		  <td>Austin</td>
-		  <td>$25000</td>
-		  <td><a href="#" class="btn btn-outline-dark">View Car</a></td>
-		</tr>
+			{% for car in cars %}
+			<tr>
+			<th scope="row">{{ forloop.counter }}</th>
+			<td>{{ car.car_title }}</td>
+			<td>{{ car.city }}</td>
+			<td>${{ car.price | intcomma }}</td>
+			<td><a href="{% url 'car_detail' car.id %}" class="btn btn-outline-dark">View Car</a></td>
+			</tr>
+			{% endfor %}
 	  </tbody>
 	</table>
+	{% else %}
+		<h4 class="text-center"> Sorry, but you don't have any inquires yet</h4>
+    </div>
+	{% endif %}
 </div>
 <!--   Dashboard End   -->
 {% endblock %}
